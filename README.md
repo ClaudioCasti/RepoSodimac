@@ -1,5 +1,4 @@
 # RepoSodimac
-Claro, aquí tienes la versión del README.md sin emojis, con un tono completamente profesional.
 
 Agente Funcional de Asistencia al Cliente para Sodimac
 Este proyecto implementa un agente de inteligencia artificial autónomo diseñado para modernizar la atención al cliente de Sodimac. El agente utiliza un Modelo de Lenguaje Grande (LLM) orquestado por el framework LangChain Agents para comprender, planificar y ejecutar tareas complejas, yendo más allá de un simple sistema de preguntas y respuestas.
