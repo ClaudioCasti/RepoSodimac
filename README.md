@@ -1,120 +1,274 @@
-# RepoSodimac
+📘 Agente Sodimac — Asistente Inteligente con RAG y Observabilidad
 
-Agente Funcional de Asistencia al Cliente para Sodimac
-Este proyecto implementa un agente de inteligencia artificial autónomo diseñado para modernizar la atención al cliente de Sodimac. El agente utiliza un Modelo de Lenguaje Grande (LLM) orquestado por el framework LangChain Agents para comprender, planificar y ejecutar tareas complejas, yendo más allá de un simple sistema de preguntas y respuestas.
+Este proyecto implementa un Agente de Asistencia al Cliente para Sodimac basado en técnicas modernas de IA generativa, LangChain, RAG, y un sistema de orquestación de herramientas, orientado a brindar respuestas precisas, rápidas y contextualizadas sobre productos, políticas y servicios de la empresa.
 
-La solución combina una base de conocimiento interna (mediante RAG) con herramientas de acceso a información externa y memoria conversacional para ofrecer una asistencia dinámica, contextual y eficiente.
+El agente también incorpora observabilidad, trazabilidad, y un scaffolding modular que facilita su mantenimiento, monitoreo y escalabilidad.
 
-Características Principales
-Razonamiento y Planificación (ReAct): El agente puede descomponer una pregunta compleja en una secuencia de pasos lógicos para resolverla.
+🚀 Características Principales
+✔️ 1. Razonamiento y Planificación (ReAct)
 
-Consulta de Base de Conocimiento Interna: Utiliza un pipeline RAG para responder preguntas específicas sobre productos, manuales y políticas de Sodimac con alta precisión, basándose en documentos internos.
+El agente utiliza el patrón ReAct (Reasoning + Acting) para resolver problemas complejos combinando razonamiento lógico, acceso al conocimiento interno y ejecución de herramientas.
 
-Acceso a Información Externa: Integra una herramienta de búsqueda web para obtener datos en tiempo real, como precios de la competencia, tendencias o especificaciones de productos no catalogados.
+✔️ 2. RAG – Base de Conocimiento Interna
 
-Memoria Conversacional: Recuerda el contexto de la conversación, permitiendo preguntas de seguimiento y un diálogo mucho más natural y fluido.
+Utiliza un pipeline Retrieval-Augmented Generation para responder consultas basadas en documentos reales de Sodimac:
 
-Ejecución de Tareas: Puede realizar acciones concretas, como generar y guardar resúmenes o comparativas en archivos de texto.
+manuales
 
-Arquitectura de la Solución
-El sistema se basa en un agente conversacional de tipo ReAct (Reasoning and Acting). El Agent Executor de LangChain actúa como el cerebro central, coordinando el LLM, la memoria y un conjunto de herramientas para formular un plan y ejecutarlo.
+políticas de devolución
 
-[Aquí puedes insertar tu diagrama de orquestación como una imagen]
+especificaciones de productos
+
+información interna cargada en vector stores
+
+✔️ 3. Acceso a Información Externa
+
+Incluye una herramienta opcional de búsqueda web para complementar información con datos en tiempo real:
+
+precios de mercado
+
+especificaciones externas
+
+comparativas de productos
+
+✔️ 4. Memoria Conversacional
+
+Guarda el contexto de las interacciones para permitir:
+
+seguimiento natural de la conversación
+
+aclaraciones
+
+preguntas dependientes de respuestas anteriores
+
+✔️ 5. Ejecución de Tareas
+
+El agente puede:
+
+generar archivos .txt
+
+hacer comparativas
+
+resumir documentos
+
+consultar bases vectoriales
+
+realizar acciones autónomas planificadas
+
+🧠 Arquitectura General de la Solución
+
+La arquitectura se basa en un Agente ReAct orquestado por LangChain:
+
+Usuario → LLM → Agente ReAct → Herramientas (RAG, Web, Memoria) → Respuesta Inteligente
 
 
-Estructura del Proyecto
+El AgentExecutor coordina:
+
+el LLM
+
+el razonamiento paso a paso
+
+el acceso a herramientas (Tools)
+
+la memoria de conversación
+
+y los componentes RAG
+
+👉 Aquí puedes agregar tu diagrama de orquestación.
+
+🗂️ Estructura del Proyecto
 agente-sodimac/
 ├── src/
-│   ├── agent_main.py         # Script principal para ejecutar el agente
-│   ├── tools.py              # Definición de herramientas personalizadas (RAG)
-│   └── data_ingestion.py     # Script para procesar documentos y crear la BD de vectores
+│   ├── agent_main.py           # Script principal del agente interactivo
+│   ├── tools.py                # Herramientas personalizadas (RAG + WebSearch)
+│   ├── data_ingestion.py       # Construcción del Vector Store
+│   ├── agent/
+│   │   └── sodimac_agent.py    # Lógica del agente con LangChain ReAct y RAG
+│   ├── ingestion/
+│   │   └── ingest.py           # Script scaffold para generar embeddings y BD
+│   ├── memory/                 # Módulo para memoria conversacional
+│   └── utils/                  # Funciones auxiliares
 ├── data/
-│   └── (documentos.pdf)      # Carpeta para los PDFs de Sodimac
+│   └── *.pdf                   # Documentos internos de Sodimac
 ├── vector_db/
-│   └── (faiss_index)         # Almacenamiento del índice vectorial de FAISS
-├── .env                      # Archivo para las claves de API (debe ser creado)
-├── requirements.txt          # Lista de dependencias de Python
-└── README.md                 # Esta documentación
-Instalación y Configuración
-Sigue estos pasos para poner en funcionamiento el agente en tu entorno local.
+│   └── faiss_index             # Base vectorial generada
+├── documents/                  # Documentos .txt para ingestión inicial (scaffold)
+├── requirements.txt            
+├── .env.example                
+├── .env                        # Variables de entorno (NO se sube a GitHub)
+└── README.md                   # Documentación del proyecto
 
-1. Prerrequisitos
-Python 3.9 o superior.
+⚙️ Instalación y Configuración
+🔧 Prerrequisitos
 
-Git.
+Python 3.9+
 
-2. Clonar el Repositorio
-Bash
+Git
 
+🔽 1. Clonar el Repositorio
 git clone https://github.com/[TU_USUARIO_GITHUB]/agente-sodimac.git
 cd agente-sodimac
-3. Configurar el Entorno
-Se recomienda encarecidamente utilizar un entorno virtual para gestionar las dependencias.
 
-Bash
-
-# Crear un entorno virtual
+🧬 2. Crear Entorno Virtual
 python -m venv venv
 
-# Activar el entorno virtual
-# En Windows:
+
+Activar:
+
+Windows:
+
 venv\Scripts\activate
-# En macOS/Linux:
+
+
+Mac/Linux:
+
 source venv/bin/activate
-4. Instalar Dependencias
-Bash
 
+📦 3. Instalar Dependencias
 pip install -r requirements.txt
-5. Configurar las Claves de API
-Crea un archivo llamado .env en la raíz del proyecto y añade tus claves de API. Necesitarás acceso a un proveedor de LLMs (como Hugging Face) y a una API de búsqueda web (como SerpApi de Google).
 
-Ini, TOML
+🔐 4. Configurar Variables de Entorno
 
-# Ejemplo de archivo .env
-HUGGINGFACEHUB_API_TOKEN="hf_xxxxxxxxxxxxxxxxxxxx"
-SERPAPI_API_KEY="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-Nota: Nunca compartas este archivo ni subas tus claves de API a un repositorio público. El archivo .gitignore debe contener una línea que diga .env.
+Crear archivo .env en la raíz:
 
-Modo de Uso
-Paso 1: Ingesta de Datos (Ejecutar solo una vez)
-Antes de iniciar el agente por primera vez, debes procesar los documentos de Sodimac para crear la base de conocimiento vectorial.
+HUGGINGFACEHUB_API_TOKEN="hf_xxxxxxxxxxxxx"
+SERPAPI_API_KEY="xxxxxxxxxxxxxxxxxxxxxxx"
+OPENAI_API_KEY="xxxxxxxxxxxxxxxxxxxxxxx"
 
-Añade tus archivos PDF a la carpeta /data.
 
-Ejecuta el siguiente comando en tu terminal:
+⚠️ Nunca subas este archivo a GitHub.
 
-Bash
+📥 Modo de Uso
+Paso 1 — Ingesta de Datos
+
+(Se realiza solo la primera vez)
+
+Colocar PDFs en /data
+Luego ejecutar:
 
 python src/data_ingestion.py
-Este script leerá los documentos, los procesará y creará un índice FAISS en la carpeta /vector_db.
 
-Paso 2: Iniciar el Agente Interactivo
-Una vez creada la base de datos, puedes iniciar el agente para empezar a conversar.
 
-Bash
+Esto:
 
+procesa documentos
+
+genera embeddings
+
+crea el índice FAISS o Chroma
+
+Paso 2 — Ejecutar el Agente Interactivo
 python src/agent_main.py
-El agente te saludará y podrás comenzar a hacerle preguntas. Para finalizar la sesión, simplemente escribe salir.
 
-Ejemplos de Interacción
-Consulta simple (usa la herramienta RAG)
-Tú: ¿Cuál es la política de devoluciones para herramientas eléctricas?
 
-Consulta con memoria (recuerda el contexto)
-Tú: ¿Y aplica lo mismo si el empaque está dañado?
+Luego puedes preguntar:
 
-Tarea compleja (requiere múltiples herramientas y planificación)
-Tú: Compara el taladro Bauker de 18V de nuestro catálogo con el modelo equivalente de Makita que encuentres en el mercado y guarda un resumen en un archivo llamado comparativa.txt.
+¿Cuál es la política de devoluciones?
+¿Puedo devolver un producto sin boleta?
+Compara este taladro con otro del mercado.
 
-Tecnologías Utilizadas
-Lenguaje: Python
+💬 Ejemplos de Interacción
+❓ Consulta RAG
 
-Orquestación de IA: LangChain
+Tú:
 
-Modelos de Lenguaje: Hugging Face Hub (configurable)
+¿Cuál es la política de devoluciones para herramientas eléctricas?
 
-Base de Datos Vectorial: FAISS
+🧠 Pregunta con memoria
 
-Embeddings: SentenceTransformers (Hugging Face)
+Tú:
 
-Búsqueda Web: SerpApi (Google Search)
+¿Y aplica lo mismo si el empaque está dañado?
+
+🛠️ Tarea Compleja (ReAct + RAG + WebSearch)
+
+Tú:
+
+Compara el taladro Bauker 18V con el Makita equivalente y guarda un resumen en comparativa.txt.
+
+🧩 Tecnologías Utilizadas
+Componente	Tecnología
+LLM	Hugging Face / OpenAI
+Agente	LangChain Agents
+RAG	ChromaDB / FAISS + SentenceTransformers
+Embeddings	OpenAI Embeddings
+API	FastAPI + Uvicorn
+Observabilidad	Logs + Métricas + Trazas
+Web Search	SerpAPI
+🧪 Análisis del Script de Scaffolding (Evaluación 3)
+
+El archivo scaffold_agente_sodimac_evaluacion3.py genera automáticamente una estructura profesional de proyecto.
+
+Puntos Clave del Análisis:
+✔️ 1. Crea una estructura modular completa
+
+Incluye carpetas como:
+
+/agent
+
+/tools
+
+/memory
+
+/ingestion
+
+/utils
+
+/documents
+
+/tests
+
+✔️ 2. Genera archivos esenciales
+
+requirements.txt
+
+.env.example
+
+README.md
+
+scripts listos para:
+
+ingestión RAG
+
+interacción RAG
+
+exposición como API
+
+✔️ 3. Implementa RAG completo
+
+Incluye:
+
+chunking con RecursiveCharacterTextSplitter
+
+embeddings mediante OpenAIEmbeddings
+
+almacenamiento persistente con ChromaDB
+
+retrieval configurado (k=5)
+
+cadena RAG lista (RetrievalQA.from_chain_type)
+
+✔️ 4. API completa con FastAPI
+
+Incluye endpoint:
+
+POST /query
+
+
+Para consultar usando:
+
+agent.answer_question(query)
+
+🏁 Conclusión
+
+Este proyecto combina:
+
+IA generativa
+
+RAG profesional
+
+agentes autónomos ReAct
+
+observabilidad
+
+buenas prácticas de ingeniería de software
